@@ -2,7 +2,7 @@ apiVersion: v1
 kind: deployement
 metadata:
   name: mongodb
-  Namespace: roboshop
+  namespace: roboshop
 
   labels:
     project: roboshop
@@ -34,7 +34,7 @@ apiVersion: v1
 kind: Service 
 metadata:
    name: mongodb
-   Namespace: roboshop
+   namespace: roboshop
 
    labels:
      project: roboshop
