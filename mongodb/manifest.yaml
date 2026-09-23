@@ -1,59 +1,54 @@
-apiVersion: v1
-kind: deployement
+apiVersion: apps/v1
+kind: Deployment
+
 metadata:
   name: mongodb
   namespace: roboshop
-
   labels:
     project: roboshop
     tier: db
     component: mongodb
 
-  spec:
-     replicas: 1
-     selector:
-        matchlabels:
-          project: roboshop
-          tier: db
-          component: mongodb
+spec:
+  replicas: 1
 
-    #pod
-     template:
-       metadata:
-         labels:
-            project: roboshop
-            tier: db
-            component: mongodb
-       spec:
-         containers:
-           - name: mongodb
-             image: murali9686/mongodb:2.0.0
+  selector:
+    matchLabels:
+      project: roboshop
+      tier: db
+      component: mongodb
+
+  template:
+    metadata:
+      labels:
+        project: roboshop
+        tier: db
+        component: mongodb
+
+    spec:
+      containers:
+        - name: mongodb
+          image: murali9686/mongodb:2.0.0
 
 ---
 apiVersion: v1
-kind: Service 
+kind: Service
+
 metadata:
-   name: mongodb
-   namespace: roboshop
+  name: mongodb
+  namespace: roboshop
+  labels:
+    project: roboshop
+    tier: db
+    component: mongodb
 
-   labels:
-     project: roboshop
-     tier: db
-     component: mongodb
+spec:
+  selector:
+    project: roboshop
+    tier: db
+    component: mongodb
 
-   spec: 
-  
-     selector:
-           project: roboshop
-           tier: db
-           component: mongodb
-
-     ports:
-       - protocol: TCP
-         port: 27017
-         targetport: 27017
-
-        
-
-
-
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017
