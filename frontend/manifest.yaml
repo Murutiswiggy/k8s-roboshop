@@ -121,6 +121,7 @@ data:
 ---
   apiVersion: v1
   kind: Service
+
   metadata:
     name: frontend
     namespace: roboshop
@@ -130,10 +131,11 @@ data:
       component: frontend
   spec:
     type: LoadBalancer
-  selector:
-    project: roboshop
-    tier: frontend
-    component: frontend
+    
+    selector:
+      project: roboshop
+      tier: frontend
+      component: frontend
   ports:
     - protocol: TCP
       port: 80 # service port
