@@ -1,10 +1,9 @@
-apiVersion: app/v1
+apiVersion: v1
 kind: Deployment
 
 metadata:
   name: user
   namespace: roboshop
-
   labels:
     project: roboshop
     tier: backend
@@ -12,44 +11,51 @@ metadata:
 
 spec:
   replicas: 1
+
   selector:
-     matchLabels:
-       project: roboshop
-       tier: backend
-       component: user
-  #pod
+    matchLabels:
+      project: roboshop
+      tier: backend
+      component: user
+
+  # Pod template
   template:
-     labels:
-     project: roboshop
-     tier: backend
-     component: user
-    
-  spec:
-    containers:
-      - name: user
-        image: murali9686/user:2.0.0
-        envFrom:
-        - configMapRef:
-            name: user
-     
----    
-  apiVersion: v1
-  kind: Service
-  metadata:
+    metadata:
+      labels:
+        project: roboshop
+        tier: backend
+        component: user
+
+    spec:
+      containers:
+        - name: user
+          image: murali9686/user:2.0.0
+          envFrom:
+            - configMapRef:
+                name: user
+
+---
+apiVersion: v1
+kind: Service
+
+metadata:
   name: user
   namespace: roboshop
-  # servicer labels
+
+  # Service labels
   labels:
     project: roboshop
     tier: backend
     component: user
-    spec:
-  # Service uses the below labels to select the pods
-      selector:
-       project: roboshop
-       tier: backend
-       component: user
+
+spec:
+  # Service selects Pods using these labels
+  selector:
+    project: roboshop
+    tier: backend
+    component: user
+
   ports:
     - protocol: TCP
-      port: 8080 # service port
-      targetPort: 8080 # container port 
+      port: 8080
+      targetPort: 8080
