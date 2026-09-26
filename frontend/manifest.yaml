@@ -6,7 +6,7 @@ metadata:
   namespace: roboshop
 
 data:
- nginx.conf: |
+ nginx.conf:  |
     user nginx;
     worker_processes auto;
     error_log /var/log/nginx/error.log notice;
@@ -71,7 +71,7 @@ data:
     }
 
  apiVersion: app/v1
- kind: deployement
+ kind: Deployement
 
  metadata:
   name: frontend
