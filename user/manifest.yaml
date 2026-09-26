@@ -1,5 +1,5 @@
 apiVersion: app/v1
-kind: deployement
+kind: Deployment
 
 metadata:
   name: user
