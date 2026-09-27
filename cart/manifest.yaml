@@ -8,11 +8,9 @@ data:
   CATALOGUE_HOST: catalogue
   CATALOGUE_PORT: "8080"
 
-
 ---
-apiVersion:  apps/v1
+apiVersion: apps/v1
 kind: Deployment
-
 metadata:
   name: cart
   namespace: roboshop
@@ -21,32 +19,35 @@ metadata:
     tier: backend
     component: cart
 
-  spec:
-    replicas: 1
-    selector:
-      matchLabels:
-         labels:
-          project: roboshop
-          tier: backend
-          component: cart
+spec:
+  replicas: 1
 
-  #pod
-    template:
-      metadata:
-        labels:
-         project: roboshop
-         tier: backend
-         component: cart
+  selector:
+    matchLabels:
+      project: roboshop
+      tier: backend
+      component: cart
+
+  # Pod
+  template:
+    metadata:
+      labels:
+        project: roboshop
+        tier: backend
+        component: cart
 
     spec:
       containers:
         - name: cart
           image: murali9686/cart:2.0.0
+          envFrom:
+            - configMapRef:
+                name: cart
 
 ---
 apiVersion: v1
-kind: service
-Metadata:
+kind: Service
+metadata:
   name: cart
   namespace: roboshop
   labels:
@@ -54,13 +55,13 @@ Metadata:
     tier: backend
     component: cart
 
-  spec:
-    selector:
-      project: roboshop
-      tier: backend
-      component: cart
+spec:
+  selector:
+    project: roboshop
+    tier: backend
+    component: cart
+
   ports:
     - protocol: TCP
       port: 8080
       targetPort: 8080
-       
